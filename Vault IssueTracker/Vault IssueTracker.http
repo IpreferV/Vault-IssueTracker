@@ -1,0 +1,6 @@
+@Vault_IssueTracker_HostAddress = http://localhost:5202
+
+GET {{Vault_IssueTracker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
