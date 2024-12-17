@@ -15,6 +15,7 @@ namespace Vault_IssueTracker.Controllers
             this._dbContext = _dbContext;
         }
 
+        // Fetch all the existing reports in the database
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Report>>> GetReport()
         {
@@ -25,6 +26,7 @@ namespace Vault_IssueTracker.Controllers
             return await _dbContext.Reports.ToListAsync();
         }
 
+        // Fetch a specific report by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Report>> GetReport(int id)
         {
@@ -50,6 +52,7 @@ namespace Vault_IssueTracker.Controllers
             return CreatedAtAction(nameof(GetReport), new {id = report.id}, report);
         }
 
+        // Put; Update an existing report
         [HttpPut]
         public async Task<IActionResult> PutReport(int id, Report report)
         {
