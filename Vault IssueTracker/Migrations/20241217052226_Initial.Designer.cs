@@ -12,8 +12,8 @@ using Vault_IssueTracker.Model;
 namespace Vault_IssueTracker.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20241215180632_initial")]
-    partial class initial
+    [Migration("20241217052226_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace Vault_IssueTracker.Migrations
                     b.Property<string>("title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 

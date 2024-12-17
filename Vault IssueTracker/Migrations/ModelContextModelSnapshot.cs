@@ -55,6 +55,9 @@ namespace Vault_IssueTracker.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
                     b.ToTable("Reports");

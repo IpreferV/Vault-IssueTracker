@@ -8,7 +8,6 @@ namespace Vault_IssueTracker.Model
         {
             
         }
-
         public DbSet<Report> Reports { get; set; }
         public DbSet<User> Users { get; set; }
     }
