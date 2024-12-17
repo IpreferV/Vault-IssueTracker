@@ -7,60 +7,60 @@ namespace Vault_IssueTracker.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReportController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly ModelContext _dbContext;
-    public ReportController(ModelContext _dbContext)
+    public UserController(ModelContext _dbContext)
         {
             this._dbContext = _dbContext;
         }
 
-        // Fetch all the existing reports in the database
+        // Fetch all the existing users in the database
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Report>>> GetReport()
+        public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            if (_dbContext.Reports == null)
+            if (_dbContext.Users == null)
             {
                 return NotFound();
             }
-            return await _dbContext.Reports.ToListAsync();
+            return await _dbContext.Users.ToListAsync();
         }
 
-        // Fetch a specific report by ID
+        // Fetch a specific user by ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<Report>> GetReport(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            if (_dbContext.Reports == null)
+            if (_dbContext.Users == null)
             {
                 return NotFound();
             }
-            var report = await _dbContext.Reports.FindAsync(id);
-            if (report == null)
+            var user = await _dbContext.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return report;
+            return user;
         }
 
         // Post; See if the inputs will reflect
         [HttpPost]
-        public async Task<ActionResult<Report>> PostReport(Report report)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
-            _dbContext.Reports.Add(report); 
+            _dbContext.Users.Add(user); 
             await _dbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetReport), new {id = report.id}, report);
+            return CreatedAtAction(nameof(GetUser), new {id = user.id}, user);
         }
 
-        // Put; Update an existing report
+        // Put; Update an existing user
         [HttpPut]
-        public async Task<IActionResult> PutReport(int id, Report report)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
-            if(id != report.id)
+            if(id != user.id)
             {
                 return BadRequest();
             }
-            _dbContext.Entry(report).State = EntityState.Modified;
+            _dbContext.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Vault_IssueTracker.Controllers
             }
             catch(DbUpdateConcurrencyException) 
             { 
-                if(!ReportAvailable(id))
+                if(!UserAvailable(id))
                 {
                     return NotFound();
                 }
@@ -81,27 +81,27 @@ namespace Vault_IssueTracker.Controllers
         }
 
         // Check if the report is in the database
-        private bool ReportAvailable(int id)
+        private bool UserAvailable(int id)
         {
-            return (_dbContext.Reports?.Any(x => x.id == id)).GetValueOrDefault();
+            return (_dbContext.Users?.Any(x => x.id == id)).GetValueOrDefault();
         }
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReport(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_dbContext.Reports == null)
+            if (_dbContext.Users == null)
             {
                 return NotFound();
             }
 
-            var report = await _dbContext.Reports.FindAsync(id);
-            if (report == null)
+            var user = await _dbContext.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _dbContext.Reports.Remove(report);
+            _dbContext.Users.Remove(user);
 
             await _dbContext.SaveChangesAsync();
 
